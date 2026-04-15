@@ -1,6 +1,8 @@
 # Web3 商务英语学习 App
 
-Eason 的 Web3 方向商务英语练习工具。纯静态网页 + localStorage + Gemini API。
+Eason 的 Web3 方向商务英语练习工具。纯静态网页 + localStorage + Gemini API + Cloudflare Worker 跨设备同步。
+
+**在线版本**：https://seamao.github.io/english-app/
 
 ## 功能
 
@@ -10,30 +12,101 @@ Eason 的 Web3 方向商务英语练习工具。纯静态网页 + localStorage +
 - **发音训练**：8 大发音坑，Gemini 多模态 AI 纠错（得分 + 逐词音标对比）
 - **实战素材**：SocialData 抓高热门 Twitter + Reddit，按你学过的内容推荐
 - **错题本**：所有 AI 纠错/批改自动入库，可导出 Markdown
+- **跨设备同步**：Cloudflare Worker + KV，多台设备进度/错题/SRS 实时同步
 - **PWA**：手机 Safari「添加到主屏幕」即装机
 
-## 本地运行
+---
+
+## 快速开始（给朋友：直接用）
+
+1. 打开 https://seamao.github.io/english-app/
+2. 进「设置」→ 填 Gemini API Key（[aistudio.google.com](https://aistudio.google.com) 免费申请）
+3. 想用实战素材：再填 SocialData Key（可选）
+4. 开始学！数据存你自己浏览器，跟作者无关。
+
+**不需要**任何账号、安装、命令行。
+
+---
+
+## 跨设备同步（可选）
+
+如果你想在手机 + 电脑之间同步进度：
+
+**方案 A：共用作者的 Worker（最省事）**
+
+1. 设置页「Worker URL」填：`https://web3en-sync.exchangemhb.workers.dev`
+2. 第一台设备点「生成 Key」→ 会出现一串字符 → 复制
+3. 第二台设备填同样的 Worker URL，粘贴同一个 Key
+4. 之后每次改动 3 秒内自动上云，打开另一台设备自动拉下来
+
+⚠️ Key 就是密码，别给陌生人。
+
+**方案 B：自己部署 Worker（数据完全独立）**
+
+见下方「部署 Cloudflare Worker」。
+
+---
+
+## 本地开发
 
 ```bash
-cd /Users/maohaibo/biancheng/english-app
+git clone https://github.com/seamao/english-app.git
+cd english-app
 python3 -m http.server 8000
 ```
 
 浏览器打开 http://localhost:8000
 
-本地预填 Key：复制 `js/config.local.example.js` 为 `js/config.local.js` 填入 Gemini / SocialData Key（该文件被 `.gitignore` 排除，不会推到仓库）。
+**本地预填 Key**（免去每次手填）：
+```bash
+cp js/config.local.example.js js/config.local.js
+# 编辑 js/config.local.js，填你的 Gemini / SocialData Key
+```
+
+`js/config.local.js` 已在 `.gitignore`，不会被推到仓库。
+
+---
 
 ## 部署到 GitHub Pages
 
 ```bash
-cd /Users/maohaibo/biancheng/english-app
+cd english-app
 git init && git branch -M main
 git add . && git commit -m "init"
 gh repo create english-app --public --source=. --push
-# 然后：Settings → Pages → Source: main / root
+gh api -X POST repos/<你的用户名>/english-app/pages --input - <<'JSON'
+{"source":{"branch":"main","path":"/"}}
+JSON
 ```
 
-访问 `https://<github用户名>.github.io/english-app/`。首次打开去设置页填 Gemini 和 SocialData Key（存 localStorage）。
+1-2 分钟后访问 `https://<你的用户名>.github.io/english-app/`。
+
+---
+
+## 部署 Cloudflare Worker（自用同步后端）
+
+**前置**：Cloudflare 账号（免费）+ 本机 Node.js。
+
+```bash
+# 1. 装 wrangler
+npm i -g wrangler
+wrangler login   # 浏览器授权
+
+# 2. 创建 KV namespace（存用户数据）
+cd worker
+wrangler kv namespace create SYNC
+# 输出会给你一行 id = "xxxx..."，把它填到 wrangler.toml 里
+
+# 3. 部署
+wrangler deploy
+# 得到 URL：https://web3en-sync.<你的子域>.workers.dev
+```
+
+在 App 设置页「Worker URL」填这个地址即可。
+
+**成本**：Cloudflare Workers 免费额度 **10 万请求/天**，KV 免费 **1GB 存储 + 10 万读 + 1000 写/天**。一个人日常用连 1% 都打不到，3-5 个朋友共用也不会超。
+
+---
 
 ## 技术栈
 
@@ -43,6 +116,7 @@ gh repo create english-app --public --source=. --push
 - Web Speech API（MediaRecorder 录音，浏览器 TTS 兜底）
 - SocialData.tools API（Twitter 搜索）+ Reddit 公开 JSON
 - localStorage（进度 / 错题 / SRS / 设置）
+- Cloudflare Workers + KV（跨设备同步后端，可选）
 
 ## 数据文件
 
@@ -50,3 +124,14 @@ gh repo create english-app --public --source=. --push
 - `js/data/phrases.js` — 30 个 BD 句型
 - `js/data/scenarios.js` — 40 个场景剧本
 - `js/data/phonetics.js` — 8 个发音坑
+
+## 安全 & 隐私
+
+- API Key 只存你自己的浏览器 `localStorage`，不上传作者服务器
+- 跨设备同步走你配置的 Worker，**作者看不到数据**（除非你用作者的 Worker URL —— 这种情况理论上作者能从 Cloudflare KV 读到，只是不会去看）
+- Device Key 24 字节随机，不可暴力破解；别公开分享即可
+- 完全开源，所有网络请求可审（`js/ai.js`、`js/sync.js`、`js/feed/*.js`）
+
+## License
+
+MIT
