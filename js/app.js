@@ -12,6 +12,7 @@ import { renderScenarios } from "./tabs/scenarios.js";
 import { renderPronunciation } from "./tabs/pronunciation.js";
 import { shadowButton } from "./shadowing.js";
 import { dueItems, record as srsRecord, getStats as srsStats } from "./srs.js";
+import { initSync, pullOnce } from "./sync.js";
 
 const TABS = ["daily", "phrases", "scenarios", "pronunciation", "chunks", "buglog", "feed", "settings"];
 
@@ -377,7 +378,11 @@ function init() {
   updateStreak();
   initSpeedSelector();
   initPlaybackBar();
+  initSync();
   switchTab("daily");
+  window.addEventListener("sync:applied", () => {
+    switchTab(document.querySelector("[data-tab].bg-neutral-900")?.dataset.tab || "daily");
+  });
 }
 
 window.addEventListener("DOMContentLoaded", init);

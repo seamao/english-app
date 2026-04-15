@@ -2,6 +2,7 @@ import { el, toast } from "../ui.js";
 import { getSetting, setSetting, getState } from "../storage.js";
 import { GEMINI_VOICES, GEMINI_STYLES } from "../ai.js";
 import { speak } from "../speech.js";
+import { generateDeviceKey, pullOnce, pushOnce } from "../sync.js";
 
 export function renderSettings() {
   const root = document.getElementById("tab-content");
@@ -137,6 +138,55 @@ export function renderSettings() {
         help: "没有 Key 时只用 Reddit 作为素材源。https://socialdata.tools"
       }),
       subField()
+    ),
+
+    el("section", { class: "space-y-3 p-5 bg-white rounded-2xl border border-neutral-200" },
+      el("h3", { class: "font-semibold" }, "跨设备同步（Cloudflare Worker）"),
+      el("p", { class: "text-xs text-neutral-500" }, "两个设备填相同的 Worker URL + Device Key，进度自动同步。第一次在任一设备点「生成 Key」，然后在另一设备粘同一个 Key。"),
+      field("Worker URL", "syncUrl", "https://web3en-sync.xxx.workers.dev", { help: "部署后得到的地址，无 /sync 路径" }),
+      el("div", { class: "space-y-1" },
+        el("label", { class: "block text-sm font-medium text-neutral-700" }, "Device Key（多设备共享这一串）"),
+        el("div", { class: "flex gap-2" },
+          (() => {
+            const inp = el("input", {
+              type: "text",
+              value: getSetting("syncKey") || "",
+              class: "flex-1 px-3 py-2 rounded-lg border border-neutral-300 font-mono text-xs",
+              onblur: (e) => { setSetting("syncKey", e.target.value.trim()); toast("已保存", "success"); }
+            });
+            return inp;
+          })(),
+          el("button", {
+            class: "text-xs px-3 py-2 rounded-lg bg-neutral-900 text-white",
+            onclick: (e) => {
+              const k = generateDeviceKey();
+              setSetting("syncKey", k);
+              e.target.parentNode.querySelector("input").value = k;
+              toast("已生成 Key，复制到其他设备使用", "success");
+            }
+          }, "生成 Key")
+        )
+      ),
+      el("div", { class: "flex gap-2 pt-2" },
+        el("button", {
+          class: "text-sm px-4 py-2 rounded-lg bg-emerald-600 text-white",
+          onclick: async () => {
+            const r = await pushOnce({ silent: false }).catch(e => ({ ok: false, reason: e.message }));
+            toast(r.ok ? "☁️ 已上传到云端" : `失败: ${r.reason}`, r.ok ? "success" : "error");
+          }
+        }, "⬆️ 立即上传"),
+        el("button", {
+          class: "text-sm px-4 py-2 rounded-lg bg-sky-600 text-white",
+          onclick: async () => {
+            if (!confirm("从云端拉取会覆盖本地更旧的数据，确定？")) return;
+            const r = await pullOnce({ silent: false }).catch(e => ({ ok: false, reason: e.message }));
+            if (r.ok && r.applied) { toast("☁️ 已从云端同步，刷新中...", "success"); setTimeout(() => location.reload(), 500); }
+            else if (r.ok && r.empty) toast("云端还没有数据", "info");
+            else if (r.ok) toast("本地已是最新", "success");
+            else toast(`失败: ${r.reason}`, "error");
+          }
+        }, "⬇️ 立即下载")
+      )
     ),
 
     el("section", { class: "space-y-3 p-5 bg-white rounded-2xl border border-neutral-200" },

@@ -1,0 +1,8 @@
+name = "web3en-sync"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+
+# KV namespace for user data; id 部署时由 wrangler kv:namespace create 填入
+[[kv_namespaces]]
+binding = "SYNC"
+id = "f55a292f84a5454e8d7e530608f2f5a3"
