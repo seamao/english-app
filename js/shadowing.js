@@ -102,10 +102,11 @@ export function shadowButton(targetText, contextLabel = "") {
 
 function renderReview(r, target) {
   const score = r.score ?? 0;
-  const color = score >= 80 ? "emerald" : score >= 60 ? "amber" : "rose";
+  const color = score >= 85 ? "emerald" : score >= 70 ? "sky" : score >= 55 ? "amber" : "orange";
+  const label = score >= 85 ? "很棒" : score >= 70 ? "不错" : score >= 55 ? "再练练" : score > 0 ? "需打磨" : "没听清";
   return el("div", { class: `p-3 rounded-lg bg-${color}-50 border border-${color}-200 space-y-1.5 text-xs` },
     el("div", { class: "flex items-center justify-between" },
-      el("div", { class: `font-bold text-${color}-800` }, `🎯 ${score}/100`),
+      el("div", { class: `font-bold text-${color}-800` }, `🎯 ${score}/100 · ${label}`),
       el("button", { class: "text-xs px-2 py-0.5 rounded bg-white", onclick: () => speak(target) }, "🔊 原声")
     ),
     r.transcript ? el("div", { class: "text-neutral-600" }, "听到：", el("span", { class: "font-mono" }, r.transcript)) : null,

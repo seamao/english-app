@@ -142,7 +142,7 @@ export async function reviewPronunciation(audioBlob, targetText) {
   const mimeType = normalizeAudioMime(audioBlob.type);
   const b64 = await blobToBase64(audioBlob);
 
-  const prompt = `你是英语发音教练。下面是学生朗读这句英文的录音：
+  const prompt = `你是英语发音教练，以鼓励为主。下面是学生朗读这句英文的录音：
 "${targetText}"
 
 请评估学生的朗读，用 JSON 返回：
@@ -150,11 +150,20 @@ export async function reviewPronunciation(audioBlob, targetText) {
   "transcript": 你听到学生实际念出的内容（英文原文）,
   "score": 0-100 的发音综合分,
   "accuracy_zh": 1-2 句中文总体评价,
-  "issues": [ { "word": 发音有问题的单词, "expected_ipa": 标准美式音标, "heard": 你听到的实际发音（用拼写或音标描述）, "tip": 中文改进建议 } ],
+  "issues": [ { "word": 发音有问题的单词, "expected_ipa": 标准美式音标, "heard": 你听到的实际发音, "tip": 中文改进建议 } ],
   "strengths": [ 1-2 条做得好的地方（中文）]
 }
 
-如果录音完全不可辨识，score 设为 0 并在 accuracy_zh 说明。只返回 JSON。`;
+打分参考（中国 BD 非母语学习者的实用标准，不是母语播音员标准）：
+- 90-100：发音清晰流畅，几乎无明显错误，母语者能轻松理解
+- 75-89：个别音不标准但整体清晰，听感自然，日常工作完全够用
+- 60-74：能识别出目标词，有 1-2 个明显错误但不影响理解
+- 40-59：多处明显发音偏差，听者需要猜测
+- 0-39：严重不清晰，无法识别
+
+只要 transcript 里能认出目标词，score 不应低于 60。
+只有录音完全不可辨识（静音/杂音/非英语）才给 0。
+只返回 JSON。`;
 
   const body = {
     contents: [{
