@@ -36,6 +36,11 @@ export function generateDeviceKey() {
   return btoa(String.fromCharCode(...arr)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
+function hasMeaningfulLocal(local) {
+  const s = local.state || {};
+  return (s.learned?.length || 0) + (s.learnedPhrases?.length || 0) + Object.keys(s.doneScenarios || {}).length > 0;
+}
+
 export async function pullOnce({ silent = true } = {}) {
   const ep = endpoint();
   if (!ep) return { ok: false, reason: "未配置同步" };
@@ -47,6 +52,10 @@ export async function pullOnce({ silent = true } = {}) {
     const local = readLocal();
     const localTime = Number(local.state?._updatedAt || 0);
     const remoteTime = Number(remote.updatedAt || 0);
+    if (!localTime && hasMeaningfulLocal(local)) {
+      schedulePush(500);
+      return { ok: true, applied: false, protected: true };
+    }
     if (remoteTime > localTime) {
       writeLocal(remote);
       return { ok: true, applied: true, remoteTime };
@@ -99,11 +108,19 @@ export function initSync() {
     origSetItem(k, v);
     if ([STATE_KEY, SRS_KEY, WORDCACHE_KEY].includes(k)) schedulePush();
   };
-  window.addEventListener("beforeunload", () => {
-    if (Date.now() - lastPushedAt > 1000) {
-      const ep = endpoint();
-      if (ep) navigator.sendBeacon(ep, new Blob([JSON.stringify(readLocal())], { type: "application/json" }));
-    }
+  const flushViaBeacon = () => {
+    if (Date.now() - lastPushedAt < 1000) return;
+    const ep = endpoint();
+    if (!ep) return;
+    try {
+      navigator.sendBeacon(ep, new Blob([JSON.stringify(readLocal())], { type: "application/json" }));
+      lastPushedAt = Date.now();
+    } catch {}
+  };
+  window.addEventListener("beforeunload", flushViaBeacon);
+  window.addEventListener("pagehide", flushViaBeacon);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushViaBeacon();
   });
 }
 

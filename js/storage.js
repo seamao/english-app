@@ -17,6 +17,7 @@ function load() {
 }
 
 function save(data) {
+  data._updatedAt = Date.now();
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 
