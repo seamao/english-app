@@ -10,14 +10,34 @@ export function shadowButton(targetText, contextLabel = "") {
   let recordedUrl = null;
   const slot = el("div", { class: "mt-2" });
 
+  function pickRecorderMime() {
+    if (typeof MediaRecorder === "undefined") return "";
+    const cands = [
+      "audio/mp4;codecs=mp4a.40.2",
+      "audio/mp4",
+      "audio/webm;codecs=opus",
+      "audio/webm",
+      "audio/aac",
+      "audio/ogg;codecs=opus"
+    ];
+    for (const m of cands) {
+      try { if (MediaRecorder.isTypeSupported(m)) return m; } catch {}
+    }
+    return "";
+  }
+
   async function startRecord() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       chunks = [];
-      mediaRecorder = new MediaRecorder(stream);
+      const mime = pickRecorderMime();
+      mediaRecorder = mime
+        ? new MediaRecorder(stream, { mimeType: mime })
+        : new MediaRecorder(stream);
       mediaRecorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
       mediaRecorder.onstop = () => {
-        recordedBlob = new Blob(chunks, { type: "audio/webm" });
+        const actualType = mediaRecorder.mimeType || mime || "audio/webm";
+        recordedBlob = new Blob(chunks, { type: actualType });
         if (recordedUrl) URL.revokeObjectURL(recordedUrl);
         recordedUrl = URL.createObjectURL(recordedBlob);
         stream.getTracks().forEach(t => t.stop());

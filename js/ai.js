@@ -129,9 +129,17 @@ async function blobToBase64(blob) {
   return btoa(bin);
 }
 
+function normalizeAudioMime(raw) {
+  const base = (raw || "").split(";")[0].trim().toLowerCase();
+  if (base === "audio/mp4" || base === "audio/x-m4a") return "audio/aac";
+  if (base === "audio/webm" || base === "audio/ogg") return base;
+  if (base.startsWith("audio/")) return base;
+  return "audio/webm";
+}
+
 export async function reviewPronunciation(audioBlob, targetText) {
   const key = requireKey();
-  const mimeType = audioBlob.type || "audio/webm";
+  const mimeType = normalizeAudioMime(audioBlob.type);
   const b64 = await blobToBase64(audioBlob);
 
   const prompt = `你是英语发音教练。下面是学生朗读这句英文的录音：
