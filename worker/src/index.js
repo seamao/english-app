@@ -40,6 +40,7 @@ export default {
 
     const key = url.searchParams.get("key");
     if (!validKey(key)) return json({ error: "invalid key" }, 400);
+    if (env.ALLOWED_KEY && key !== env.ALLOWED_KEY) return json({ error: "forbidden" }, 403);
     const kvKey = `user:${key}`;
 
     if (request.method === "GET") {

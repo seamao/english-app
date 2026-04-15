@@ -30,20 +30,11 @@ Eason 的 Web3 方向商务英语练习工具。纯静态网页 + localStorage +
 
 ## 跨设备同步（可选）
 
-如果你想在手机 + 电脑之间同步进度：
+如果你想在手机 + 电脑之间同步进度，**需要自己部署一个 Cloudflare Worker**（免费，3 行命令），见下方「部署 Cloudflare Worker」。
 
-**方案 A：共用作者的 Worker（最省事）**
+部署完后，在「设置」页填自己的 Worker URL → 点「生成 Key」→ 在另一台设备粘同一个 Key 即可。
 
-1. 设置页「Worker URL」填：`https://web3en-sync.exchangemhb.workers.dev`
-2. 第一台设备点「生成 Key」→ 会出现一串字符 → 复制
-3. 第二台设备填同样的 Worker URL，粘贴同一个 Key
-4. 之后每次改动 3 秒内自动上云，打开另一台设备自动拉下来
-
-⚠️ Key 就是密码，别给陌生人。
-
-**方案 B：自己部署 Worker（数据完全独立）**
-
-见下方「部署 Cloudflare Worker」。
+不需要跨设备同步的话跳过，其他功能不受影响。
 
 ---
 
@@ -100,6 +91,11 @@ wrangler kv namespace create SYNC
 # 3. 部署
 wrangler deploy
 # 得到 URL：https://web3en-sync.<你的子域>.workers.dev
+
+# 4. 设置白名单（可选但强烈推荐，防止别人刷你的 KV 额度）
+# 先在 App 设置页点「生成 Key」拿到 Device Key，然后：
+wrangler secret put ALLOWED_KEY
+# 粘贴你的 Device Key，回车。之后 Worker 只接受这一个 Key 的请求
 ```
 
 在 App 设置页「Worker URL」填这个地址即可。

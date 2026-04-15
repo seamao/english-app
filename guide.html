@@ -68,16 +68,10 @@
       <h3>实战素材</h3>
       <p>拉当天 Twitter 热门推文（需填 SocialData Key，<a href="https://socialdata.tools" target="_blank">socialdata.tools</a>）+ Reddit Web3 板块帖子。点任一条，Gemini 基于这条真实内容给你生成 3 种难度的写作任务 —— 简单版：复述一句；中等版：写条 BD DM；困难版：写 3 分钟 AMA 开场白。</p>
 
-      <h2>☁️ 跨设备同步（可选）</h2>
-      <p>如果你想手机 + 电脑进度互通，去「设置」→ 滑到「跨设备同步」：</p>
-      <ol>
-        <li>Worker URL 填：<code>https://web3en-sync.exchangemhb.workers.dev</code>（这是作者的，免费共享）</li>
-        <li>第一台设备点「生成 Key」→ 会出一串随机字符 → 复制</li>
-        <li>第二台设备填同样的 Worker URL，粘同一个 Key</li>
-        <li>之后每次改动 3 秒内自动上云，打开另一台设备自动拉下来</li>
-      </ol>
-      <p><strong>Key 就是密码</strong>，别给陌生人 —— 谁有 Key 谁就能读写你的数据。</p>
-      <p>如果你想完全独立部署自己的同步后端，看 <a href="https://github.com/seamao/english-app#部署-cloudflare-worker自用同步后端" target="_blank">GitHub README</a>。Cloudflare 免费额度 10 万请求/天，个人用永远够。</p>
+      <h2>☁️ 跨设备同步（可选，需要自己部署）</h2>
+      <p>如果你想手机 + 电脑进度互通，需要自己部署一个 Cloudflare Worker（免费）。详细步骤见 <a href="https://github.com/seamao/english-app#部署-cloudflare-worker自用同步后端" target="_blank">GitHub README</a>，大概 3 行命令。</p>
+      <p>部署完后在「设置」→「跨设备同步」里填自己的 Worker URL，点「生成 Key」→ 在另一台设备粘同一个 Key 即可。</p>
+      <p><strong>不需要跨设备同步的话直接跳过这一步，其他功能不受影响。</strong></p>
 
       <h2>❓ 常见问题</h2>
 
