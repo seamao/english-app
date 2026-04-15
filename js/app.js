@@ -2,7 +2,7 @@ import { CHUNKS, CATEGORIES } from "./data/chunks.js";
 import { PHRASES } from "./data/phrases.js";
 import { SCENARIOS } from "./data/scenarios.js";
 import { getState, markLearned, unmarkLearned, updateStreak, setSetting, getSetting, getTodayStats, getActiveDays } from "./storage.js";
-import { speak, pausePlayback, resumePlayback, stopPlayback, onPlaybackChange } from "./speech.js";
+import { speak, pausePlayback, resumePlayback, stopPlayback, onPlaybackChange, unlockAudio } from "./speech.js";
 import { el, speakableText } from "./ui.js";
 import { renderFeed } from "./tabs/feed.js";
 import { renderSettings } from "./tabs/settings.js";
@@ -400,6 +400,13 @@ function init() {
   initSpeedSelector();
   initPlaybackBar();
   initSync();
+  const unlocker = () => {
+    unlockAudio();
+    document.removeEventListener("touchend", unlocker);
+    document.removeEventListener("click", unlocker);
+  };
+  document.addEventListener("touchend", unlocker, { passive: true });
+  document.addEventListener("click", unlocker);
   switchTab("daily");
   window.addEventListener("sync:applied", () => {
     switchTab(document.querySelector("[data-tab].bg-neutral-900")?.dataset.tab || "daily");

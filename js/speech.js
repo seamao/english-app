@@ -3,10 +3,43 @@ import { synthesizeSpeech } from "./ai.js";
 
 let voicesReady = false;
 let cachedVoice = null;
+let sharedAudio = null;
 let currentAudio = null;
 let currentUtter = null;
+let currentBlobUrl = null;
+let audioUnlocked = false;
 const ttsCache = new Map();
 const listeners = new Set();
+
+const SILENT_WAV = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+
+function getSharedAudio() {
+  if (!sharedAudio) {
+    sharedAudio = new Audio();
+    sharedAudio.preservesPitch = true;
+    sharedAudio.mozPreservesPitch = true;
+    sharedAudio.webkitPreservesPitch = true;
+    sharedAudio.playsInline = true;
+  }
+  return sharedAudio;
+}
+
+export function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  try {
+    const a = getSharedAudio();
+    a.src = SILENT_WAV;
+    a.play().then(() => a.pause()).catch(() => {});
+  } catch {}
+  try {
+    if ("speechSynthesis" in window) {
+      const u = new SpeechSynthesisUtterance("");
+      u.volume = 0;
+      speechSynthesis.speak(u);
+    }
+  } catch {}
+}
 
 function emit(state) {
   for (const fn of listeners) {
@@ -38,7 +71,9 @@ export function pausePlayback() {
 }
 
 export function resumePlayback() {
-  if (currentAudio && currentAudio.paused) currentAudio.play();
+  if (currentAudio && currentAudio.paused) {
+    currentAudio.play().catch(() => emit("stopped"));
+  }
   if (speechSynthesis?.paused) speechSynthesis.resume();
   emit("playing");
 }
@@ -70,8 +105,12 @@ async function pickBrowserVoice() {
 function stopAll() {
   if (speechSynthesis?.speaking || speechSynthesis?.paused) speechSynthesis.cancel();
   if (currentAudio) {
-    currentAudio.pause();
+    try { currentAudio.pause(); } catch {}
     currentAudio = null;
+  }
+  if (currentBlobUrl) {
+    try { URL.revokeObjectURL(currentBlobUrl); } catch {}
+    currentBlobUrl = null;
   }
   currentUtter = null;
 }
@@ -104,13 +143,22 @@ async function speakGemini(text, speed) {
     ttsCache.set(cacheKey, blob);
   }
   const url = URL.createObjectURL(blob);
-  currentAudio = new Audio(url);
-  currentAudio.playbackRate = speed;
-  currentAudio.preservesPitch = true;
-  currentAudio.onended = () => { URL.revokeObjectURL(url); emit("stopped"); };
-  currentAudio.onpause = () => { if (!currentAudio?.ended) emit("paused"); };
-  currentAudio.onplay = () => emit("playing");
-  await currentAudio.play();
+  currentBlobUrl = url;
+  const audio = getSharedAudio();
+  audio.src = url;
+  audio.playbackRate = speed;
+  audio.preservesPitch = true;
+  audio.webkitPreservesPitch = true;
+  audio.onended = () => { if (currentBlobUrl === url) { URL.revokeObjectURL(url); currentBlobUrl = null; } emit("stopped"); };
+  audio.onpause = () => { if (!audio.ended) emit("paused"); };
+  audio.onplay = () => emit("playing");
+  currentAudio = audio;
+  try {
+    await audio.play();
+  } catch (e) {
+    emit("stopped");
+    throw new Error("iOS 音频被拒：请先点一下屏幕任意位置后再试（首次加载需用户手势解锁）");
+  }
 }
 
 export async function speak(text) {
