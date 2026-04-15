@@ -13,7 +13,7 @@ export const PHRASES = [
   },
   { id: 2, category: "开场", skeleton: "我是 X 项目的 Y（自我介绍）", pattern: "I'm [name], [role] at [project]", ipa: "/aɪm neɪm roʊl ət ˈprɑːdʒekt/",
     examples: [
-      { en: "I'm Eason, Head of BD at RNS.", zh: "我是 Eason，RNS 的 BD 负责人。" },
+      { en: "I'm Eason, Head of BD at Linea.", zh: "我是 Eason，Linea 的 BD 负责人。" },
       { en: "I'm Alex, leading growth at a new L2 we're building.", zh: "我是 Alex，负责我们新 L2 项目的增长。" },
       { en: "I'm Sarah from the tokenomics side at Paradigm.", zh: "我是 Paradigm 这边负责代币经济的 Sarah。" },
       { en: "I'm Tom, co-founder of a DeFi protocol launching next month.", zh: "我是 Tom，一个下个月上线的 DeFi 协议的联创。" }
@@ -21,7 +21,7 @@ export const PHRASES = [
   },
   { id: 3, category: "开场", skeleton: "简单自我介绍一下我们在做什么", pattern: "In short, we're building [one-liner]", ipa: "/ɪn ʃɔːrt wɪər ˈbɪldɪŋ/",
     examples: [
-      { en: "In short, we're building a decentralized identity layer for Web3.", zh: "简单说，我们在做 Web3 的去中心化身份层。" },
+      { en: "In short, we're building a zkEVM Layer 2 for Ethereum.", zh: "简单说，我们在做以太坊的 zkEVM 二层网络。" },
       { en: "In short, we're building an L2 focused on payments.", zh: "简单说，我们在做一个专注支付的 L2。" },
       { en: "In short, we're building the Stripe of crypto for emerging markets.", zh: "简单说，我们在做新兴市场的加密 Stripe。" },
       { en: "In short, we're building restaking infrastructure for validators.", zh: "简单说，我们在做面向验证者的再质押基础设施。" }

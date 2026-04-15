@@ -10,7 +10,7 @@ export const SCENARIOS = [
     context: "在 Token2049 展位前，一个陌生人走过来递名片。你要自我介绍 + 问对方在做什么。",
     tips: ["先握手 + Nice to meet you", "姓 + 项目一句话", "主动把球打回去问对方"],
     L1: {
-      script: "Hey, nice to meet you — I'm Eason from RNS, we do decentralized identity. What about you, what brings you here?"
+      script: "Hey, nice to meet you — I'm Eason from Linea, we're a zkEVM Layer 2. What about you, what brings you here?"
     },
     L2: {
       template: "Hey, nice to meet you — I'm [你的名] from [项目名], we do [一句话业务]. What about you, what brings you here?",
@@ -129,7 +129,7 @@ export const SCENARIOS = [
     context: "朋友 Jake 把你介绍给某 VC 的 Sarah。你要发第一条消息给 Sarah + cc Jake。",
     tips: ["第一句感谢 Jake 牵线", "一句话自我介绍", "明确你希望聊什么 + CTA"],
     L1: {
-      script: "Hi Sarah — thanks a ton to Jake for the intro. I'm Eason, founder of RNS. Jake mentioned you've been looking at identity plays, and I'd love to share what we're working on. Would you be open to a 20-min call next week? (Jake — thanks again, moving you to bcc.)"
+      script: "Hi Sarah — thanks a ton to Jake for the intro. I'm Eason, BD lead at Linea. Jake mentioned you've been looking at L2 infra, and I'd love to share what we're working on. Would you be open to a 20-min call next week? (Jake — thanks again, moving you to bcc.)"
     },
     L2: {
       template: "Hi [对方名] — thanks a ton to [介绍人] for the intro. I'm [你的名], [身份]. [介绍人] mentioned [共鸣点], and I'd love to [诉求]. Would you be open to [CTA]? ([介绍人] — thanks again, moving you to bcc.)",
@@ -248,7 +248,7 @@ export const SCENARIOS = [
     context: "给对方打电话没接，要留 30 秒 voicemail。",
     tips: ["开头报姓 + 公司", "一句话说事由", "留号码并重复一遍"],
     L1: {
-      script: "Hi Mike, this is Eason from RNS — quick call to follow up on the listing conversation. Nothing urgent, but give me a ring back when you have a minute. My number is +852 9123 4567, again that's +852 9123 4567. Thanks, talk soon."
+      script: "Hi Mike, this is Eason from Linea — quick call to follow up on the listing conversation. Nothing urgent, but give me a ring back when you have a minute. My number is +852 9123 4567, again that's +852 9123 4567. Thanks, talk soon."
     },
     L2: {
       template: "Hi [对方名], this is [你的名] from [项目名] — quick call to [事由]. Give me a ring back when you have a minute. My number is [号码], again that's [号码]. Thanks, talk soon.",
@@ -282,7 +282,7 @@ export const SCENARIOS = [
     context: "你刚被拉进一个项目的 partner TG 群。要发一条得体的第一条消息。",
     tips: ["别只发 '👋 Hello'", "简介 + 你来这个群做什么", "欢迎对方找你"],
     L1: {
-      script: "Hey everyone 👋 Eason here from RNS — our team will be coordinating the joint AMA and marketing push on our side. Feel free to ping me directly (@EasonRNS) for anything time-sensitive. Excited to work with you all."
+      script: "Hey everyone 👋 Eason here from Linea — our team will be coordinating the joint AMA and marketing push on our side. Feel free to ping me directly (@EasonLinea) for anything time-sensitive. Excited to work with you all."
     },
     L2: {
       template: "Hey everyone 👋 [你的名] here from [项目名] — our team will be [在群里做什么]. Feel free to ping me directly ([联系方式]) for [类型事情]. Excited to work with you all.",
@@ -299,7 +299,7 @@ export const SCENARIOS = [
     context: "电梯里碰到大 VC。只有 60 秒。要讲清 what / why now / traction / ask。",
     tips: ["一句话公式：we help X do Y by Z", "给最硬的一个数字", "问题要具体不泛泛"],
     L1: {
-      script: "So — we help Web3 apps onboard users without seed phrases, using a decentralized identity primitive. We've gone from zero to 30K users in 3 months, mostly organic. We're closing a $5M seed next month, and I think your thesis on identity as the next UX frontier is a natural fit. Any chance you'd have 20 minutes next week?"
+      script: "So — we help Ethereum dApps accept any token as gas, using an account abstraction relayer. We've gone from zero to 30K users in 3 months, mostly organic. We're closing a $5M seed next month, and I think your thesis on AA as the next UX frontier is a natural fit. Any chance you'd have 20 minutes next week?"
     },
     L2: {
       template: "So — we help [目标客户] do [要做的事] by [方法]. We've gone from [起点] to [现状] in [时间]. We're [当前节点], and I think [对方契合点] is a natural fit. Any chance you'd have 20 minutes next week?",
@@ -367,7 +367,7 @@ export const SCENARIOS = [
     context: "给 Optimism RetroPGF / Arbitrum STIP 写 grant 提案的 Summary 段。100 字以内。",
     tips: ["一句话 what", "一句话 why 生态受益", "一句话 how much & deliverable"],
     L1: {
-      script: "RNS is a decentralized identity layer that has onboarded 30K Optimism users in 3 months. We're requesting $150K to build native support for Superchain identity resolution, which will let any OP Stack chain share a unified user graph. Deliverables include the SDK, documentation, and two reference integrations, shipped within 90 days."
+      script: "PayKit is an on-chain payment SDK that has processed $30M in volume across 3 L2s in 3 months. We're requesting $150K from the Base Ecosystem Fund to build native support for Base-specific payment rails, which will let any Base dApp accept stablecoin payments with one line of code. Deliverables include the SDK, documentation, and two reference integrations, shipped within 90 days."
     },
     L2: {
       template: "[项目名] is [一句话业务] that has [生态相关成就]. We're requesting [金额] to [交付物 1 句话], which will [生态价值]. Deliverables include [清单], shipped within [时限].",
@@ -435,7 +435,7 @@ export const SCENARIOS = [
     context: "你的项目想上币安。你在 LinkedIn 找到他们 Listing BD 的联系方式，第一次发 DM。目标：拿到 20 分钟的 intro call。",
     tips: ["不超过 4 句话", "先自我介绍 + 一句话说清你是干嘛的", "给出一个'他为什么该搭理你'的理由", "明确下一步 CTA"],
     L1: {
-      script: "Hi Mike, I'm Eason, Head of BD at RNS. In short, we're building a decentralized identity layer that has onboarded 30K users in 3 months. I'd love to explore a listing opportunity with you. Would you be open to a quick 20-min call next week?"
+      script: "Hi Mike, I'm Eason, Head of BD at Linea. In short, we're an Ethereum zkEVM L2 that has reached $1B TVL in 3 months. I'd love to explore a listing opportunity for one of our top ecosystem tokens with you. Would you be open to a quick 20-min call next week?"
     },
     L2: {
       template: "Hi [对方名], I'm [你的名], [你的职位] at [项目名]. In short, we're building [一句话介绍项目]. I'd love to explore [合作诉求] with you. Would you be open to a quick 20-min call [时间]?",
@@ -469,7 +469,7 @@ export const SCENARIOS = [
     context: "你想邀请一位有 50 万粉丝的 Web3 KOL 做联合 AMA，宣传你们项目的 TGE。第一次接触。",
     tips: ["先夸一下对方近期内容", "说清楚对他有什么好处", "给具体方案不要空谈"],
     L1: {
-      script: "Hi Alex, big fan of your recent thread on restaking — super insightful. I'm Eason from RNS, and we're heading into TGE next month. I'd love to explore a joint AMA on X Spaces with you. We can offer a KOL allocation plus co-marketing support in exchange. Would you be open to a quick call to discuss?"
+      script: "Hi Alex, big fan of your recent thread on restaking — super insightful. I'm Eason from Linea, and we're heading into a major ecosystem campaign next month. I'd love to explore a joint AMA on X Spaces with you. We can offer a co-marketing package plus ecosystem grant support in exchange. Would you be open to a quick call to discuss?"
     },
     L2: {
       template: "Hi [KOL名], big fan of [对方最近内容]. I'm [你的名] from [项目名], and we're [当前节点]. I'd love to explore [合作形式] with you. We can offer [你的付出] in exchange. Would you be open to a quick call?",
@@ -520,7 +520,7 @@ export const SCENARIOS = [
     context: "Zoom intro call 刚接通。对方是某 tier-1 VC 投资合伙人。你要在前 60 秒内把破冰 + 议程说清楚。",
     tips: ["感谢 + 轻寒暄一句", "给出一个 30s 的自我&项目介绍", "主动抛议程，控制节奏"],
     L1: {
-      script: "Hey Jake, thanks for making the time. Good to finally put a face to the name. For context, I'm Eason, BD at RNS — we're the decentralized identity layer you may have seen on your feed last week. For today I was thinking we could spend maybe 10 min on what we're building, 10 on the round, and save the last 10 for your questions. Does that work?"
+      script: "Hey Jake, thanks for making the time. Good to finally put a face to the name. For context, I'm Eason, BD at Linea — the zkEVM Layer 2 you may have seen on your feed last week. For today I was thinking we could spend maybe 10 min on what we're building, 10 on the ecosystem traction, and save the last 10 for your questions. Does that work?"
     },
     L2: {
       template: "Hey [对方名], thanks for making the time. For context, I'm [你的名], [你的职位] at [项目名] — we're [一句话介绍]. For today I was thinking we spend maybe [时间1] on [话题1], [时间2] on [话题2], and save the rest for your questions. Does that work?",
@@ -571,7 +571,7 @@ export const SCENARIOS = [
     context: "给某 VC partner 发冷邮件求 intro call。邮件要短、有钩子、有社交证明、有 CTA。",
     tips: ["主题行要像个人写的不像群发", "第一句抓眼球", "3-4 句话讲清 what + why now", "一个明确 CTA"],
     L1: {
-      script: "Subject: RNS — 30K users in 3 months, raising seed\n\nHi Jake, saw your recent post on identity being the next frontier — totally aligned with what we're building. I'm Eason, founder of RNS, a decentralized identity layer that's onboarded 30K users in 3 months with zero paid acquisition. We're opening a $5M seed next month and think Paradigm would be a natural fit given your thesis on social primitives. Would you be open to a 20-min intro call next week?"
+      script: "Subject: MintPad — 30K users in 3 months, raising seed\n\nHi Jake, saw your recent post on NFT infrastructure being the next frontier — totally aligned with what we're building. I'm Eason, founder of MintPad, a creator-first NFT launch platform built on Ethereum that's onboarded 30K users in 3 months with zero paid acquisition. We're opening a $5M seed next month and think Paradigm would be a natural fit given your thesis on creator economy. Would you be open to a 20-min intro call next week?"
     },
     L2: {
       template: "Subject: [项目名] — [一句成绩], raising [轮次]\n\nHi [对方名], saw your recent [内容] — totally aligned with [你的共鸣点]. I'm [你的名], [职位] at [项目名], [项目一句话 + 一个硬指标]. We're opening [轮次细节] and think [基金名] would be a natural fit given [对方特点]. Would you be open to a 20-min intro call next week?",
@@ -673,7 +673,7 @@ export const SCENARIOS = [
     context: "刚和一个潜在战略投资方开完 45 分钟 Zoom。要在当天发一封结构化 follow-up 邮件。",
     tips: ["主题行放会议日期 + 话题", "summary + next steps + 附件", "别废话"],
     L1: {
-      script: "Subject: Recap & next steps — RNS x Paradigm (Apr 16)\n\nHi Jake, really enjoyed the conversation today. Quick recap of what we aligned on: (1) you'll review our tokenomics deck internally this week, (2) we'll share the audit report by Thursday, and (3) we'll reconvene next Monday with your investment committee. Attaching the deck and a one-pager for easy sharing. Let me know if anything else would be helpful — thanks again for the time."
+      script: "Subject: Recap & next steps — MintPad x Paradigm (Apr 16)\n\nHi Jake, really enjoyed the conversation today. Quick recap of what we aligned on: (1) you'll review our tokenomics deck internally this week, (2) we'll share the audit report by Thursday, and (3) we'll reconvene next Monday with your investment committee. Attaching the deck and a one-pager for easy sharing. Let me know if anything else would be helpful — thanks again for the time."
     },
     L2: {
       template: "Subject: Recap & next steps — [你方] x [对方] ([日期])\n\nHi [对方名], really enjoyed the conversation today. Quick recap of what we aligned on: (1) [下一步1], (2) [下一步2], (3) [下一步3]. Attaching [附件]. Let me know if anything else would be helpful — thanks again for the time.",
