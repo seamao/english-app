@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>使用指南 · Web3 商务英语</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .prose h2 { font-size: 1.25rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: #1f2937; }
+    .prose h3 { font-size: 1rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #374151; }
+    .prose p { margin-bottom: 0.75rem; line-height: 1.7; color: #4b5563; }
+    .prose ul { margin-bottom: 0.75rem; padding-left: 1.25rem; list-style: disc; color: #4b5563; }
+    .prose ol { margin-bottom: 0.75rem; padding-left: 1.5rem; list-style: decimal; color: #4b5563; }
+    .prose li { margin-bottom: 0.25rem; line-height: 1.7; }
+    .prose code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 0.875em; color: #db2777; }
+    .prose a { color: #4f46e5; text-decoration: underline; }
+    .prose strong { color: #111827; }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 antialiased">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <a href="./" class="text-sm text-indigo-600">← 回首页</a>
+    </div>
+
+    <h1 class="text-3xl font-bold mb-2">📖 使用指南</h1>
+    <p class="text-sm text-neutral-500 mb-8">Web3 商务英语学习工具 · 从 0 到上手 5 分钟</p>
+
+    <div class="prose">
+
+      <h2>⚡ 一分钟上手</h2>
+      <ol>
+        <li>去 <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> 免费申请 Gemini API Key（点 Get API Key → Create API Key）</li>
+        <li>回到本站，点右上角「设置」Tab，把 Key 粘到「Gemini API Key」输入框，点别处自动保存</li>
+        <li>回到「每日」Tab 开始练。就这么简单。</li>
+      </ol>
+
+      <h2>📱 手机装机（强烈推荐）</h2>
+      <p><strong>iPhone Safari</strong>：打开本站 → 底部中间分享按钮 → 向下滑 → 「添加到主屏幕」。之后像原生 App 一样全屏用，没有浏览器地址栏。</p>
+      <p><strong>Android Chrome</strong>：右上角菜单 → 「添加到主屏幕」。</p>
+
+      <h2>🎯 怎么用每个 Tab</h2>
+
+      <h3>每日</h3>
+      <p>每天打开先看这里。系统自动挑 <strong>3 个词块 + 2 个句型 + 1 个场景</strong>，到期复习优先（用的是 Anki 那套 SM-2 算法，学得越熟间隔越长）。每项学完打勾，明天不会再推同样的。</p>
+
+      <h3>句型库</h3>
+      <p>30 个 BD 万能句型，每个配 4 个真实 Web3 例句。比如「We're looking to...」「Can we circle back on...」。点朗读能听带情感的 TTS（Gemini 合成的，比浏览器自带好听）。</p>
+
+      <h3>场景对练（核心功能）</h3>
+      <p>40 个 Web3 BD 真实场景，三层难度：</p>
+      <ul>
+        <li><strong>L1 跟读</strong>：看完整范文，逐句听原声 + 跟读录音，对比发音</li>
+        <li><strong>L2 填空</strong>：给你模板和关键字段，你填具体内容（比如项目名、金额、日期）</li>
+        <li><strong>L3 自由生成</strong>：只给提示词和必用短语，你全英文写/说，Gemini 批改</li>
+      </ul>
+      <p>场景覆盖：交易所 listing DM、VC 冷启动邮件、AMA 开场、融资谈判、tokenomics 解释、做市商对接、项目危机公关、会议主持、pitch deck 讲解⋯⋯</p>
+
+      <h3>发音</h3>
+      <p>8 大亚洲人英语发音坑（θ / ð / v / w / r / l / æ / ɪ）。每个音给口型说明 + 高频词 + 录音评分。录完 Gemini 多模态直接给分数 + 逐词音标对比，知道哪个音没发对。</p>
+
+      <h3>词块库</h3>
+      <p>50+ Web3 高频短语（listing、tokenomics、TVL、rug pull、marketcap 之类），带音标 + 中文 + 真实例句。可以按类别筛选，标记已学/易错。</p>
+
+      <h3>错题本</h3>
+      <p>AI 批改发现的错误自动进这里。可以导出 Markdown，粘回 Obsidian 或笔记软件。</p>
+
+      <h3>实战素材</h3>
+      <p>拉当天 Twitter 热门推文（需填 SocialData Key，<a href="https://socialdata.tools" target="_blank">socialdata.tools</a>）+ Reddit Web3 板块帖子。点任一条，Gemini 基于这条真实内容给你生成 3 种难度的写作任务 —— 简单版：复述一句；中等版：写条 BD DM；困难版：写 3 分钟 AMA 开场白。</p>
+
+      <h2>☁️ 跨设备同步（可选）</h2>
+      <p>如果你想手机 + 电脑进度互通，去「设置」→ 滑到「跨设备同步」：</p>
+      <ol>
+        <li>Worker URL 填：<code>https://web3en-sync.exchangemhb.workers.dev</code>（这是作者的，免费共享）</li>
+        <li>第一台设备点「生成 Key」→ 会出一串随机字符 → 复制</li>
+        <li>第二台设备填同样的 Worker URL，粘同一个 Key</li>
+        <li>之后每次改动 3 秒内自动上云，打开另一台设备自动拉下来</li>
+      </ol>
+      <p><strong>Key 就是密码</strong>，别给陌生人 —— 谁有 Key 谁就能读写你的数据。</p>
+      <p>如果你想完全独立部署自己的同步后端，看 <a href="https://github.com/seamao/english-app#部署-cloudflare-worker自用同步后端" target="_blank">GitHub README</a>。Cloudflare 免费额度 10 万请求/天，个人用永远够。</p>
+
+      <h2>❓ 常见问题</h2>
+
+      <h3>不填 Gemini Key 能用吗？</h3>
+      <p>能。词块、句型、场景 L1/L2、发音训练全部可用，只有"AI 批改"、"Gemini TTS"、"发音评分"需要 Key。</p>
+
+      <h3>Key 会不会泄露？</h3>
+      <p>Key 只存你自己的浏览器 localStorage，不上传任何服务器（包括作者的）。所有代码开源，可以 <a href="https://github.com/seamao/english-app" target="_blank">在 GitHub 审计</a>。</p>
+
+      <h3>Gemini 免费额度够吗？</h3>
+      <p>免费版 Gemini 2.0 Flash 每天 1500 次请求。一天学 30 分钟大概消耗 50-100 次，一个月都用不完。</p>
+
+      <h3>数据会丢吗？</h3>
+      <p>存在浏览器 localStorage。清浏览器数据会清掉。建议：1) 去「设置」定期「导出 JSON 备份」；2) 配跨设备同步，数据在云端有一份。</p>
+
+      <h3>可以分享给朋友吗？</h3>
+      <p>随便分享本站链接。但 <strong>不要把你的 Device Key 给朋友</strong>（会共享进度）。让他自己点「生成 Key」即可。</p>
+
+      <h2>🐛 反馈</h2>
+      <p>Bug 或建议请提 <a href="https://github.com/seamao/english-app/issues" target="_blank">GitHub Issues</a>。</p>
+
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-neutral-200 text-center text-xs text-neutral-400">
+      <a href="./" class="hover:text-neutral-600">← 回首页</a>
+    </div>
+  </div>
+</body>
+</html>

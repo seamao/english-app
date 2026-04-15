@@ -187,8 +187,29 @@ function renderDaily() {
   const phrases = pickDailyPhrases(2);
   const scenario = pickDailyScenario();
   const chunks = pickDaily(3);
+  const state = getState();
+  const isNewUser = state.learned.length === 0 && state.learnedPhrases.length === 0 && !getSetting("geminiKey");
 
   root.appendChild(el("div", { class: "space-y-6" },
+    isNewUser ? el("div", { class: "p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 space-y-3" },
+      el("div", { class: "flex items-center gap-2" },
+        el("span", { class: "text-2xl" }, "👋"),
+        el("h2", { class: "text-lg font-bold text-indigo-900" }, "欢迎！这是 Web3 商务英语练习工具")
+      ),
+      el("p", { class: "text-sm text-neutral-700 leading-relaxed" },
+        "为币圈 BD / 项目方设计：句型库 + 场景对练（交易所 listing、VC 电话、AMA、合作谈判等 40+ 场景）+ AI 发音纠错 + 实时 Twitter/Reddit 素材。数据完全存本机，零成本。"
+      ),
+      el("div", { class: "text-xs text-neutral-600 space-y-1" },
+        el("div", null, "🚀 ", el("b", null, "快速开始"), "：去「设置」填个 Gemini API Key（", el("a", { href: "https://aistudio.google.com", target: "_blank", class: "text-indigo-600 underline" }, "免费申请"), "）→ 回到「每日」开练"),
+        el("div", null, "📚 ", el("b", null, "怎么学"), "：每天 3 个词块 + 2 个句型 + 1 个场景，大概 30 分钟"),
+        el("div", null, "📱 ", el("b", null, "装机"), "：手机 Safari 打开 → 分享 → 添加到主屏幕，当 App 用")
+      ),
+      el("div", { class: "flex gap-2 pt-2" },
+        el("button", { class: "px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium", onclick: () => switchTab("settings") }, "⚙️ 去设置"),
+        el("button", { class: "px-4 py-2 rounded-lg bg-white border border-indigo-300 text-indigo-700 text-sm", onclick: () => switchTab("phrases") }, "📖 直接逛句型库")
+      )
+    ) : null,
+
     (() => {
       const cs = srsStats("chunk", CHUNKS);
       const ps = srsStats("phrase", PHRASES);
@@ -385,6 +406,6 @@ function init() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", init);
+init();
 window.switchTab = switchTab;
 window.refreshHero = renderHero;
