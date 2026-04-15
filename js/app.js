@@ -413,6 +413,18 @@ function init() {
   });
 }
 
-init();
 window.switchTab = switchTab;
 window.refreshHero = renderHero;
+try {
+  init();
+} catch (e) {
+  const root = document.getElementById("tab-content");
+  if (root) {
+    root.innerHTML = `<div class="p-4 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
+      <div class="font-bold mb-1">初始化失败</div>
+      <div class="font-mono text-xs whitespace-pre-wrap">${(e?.stack || e?.message || e).toString().slice(0, 600)}</div>
+      <div class="mt-2 text-xs">请在浏览器"设置 → 隐私 → 清除浏览数据"里清掉缓存后重试。</div>
+    </div>`;
+  }
+  console.error(e);
+}
